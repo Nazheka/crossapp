@@ -6,6 +6,7 @@ import 'package:dailyhabit/routes.dart';
 import 'package:dailyhabit/pages/get_started/index.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dailyhabit/pages/splash/splash_screen.dart';  
 
 Future<void> main() async {
   runApp(
@@ -48,7 +49,7 @@ class DailyHabitAppState extends State<DailyHabitApp> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isStarted = prefs.getBool('isStarted') == null;
     setState(() {
-      _body = isStarted ? GetStarted() : Home();
+       _body = SplashScreen();
     });
   }
 }
