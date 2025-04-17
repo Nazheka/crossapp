@@ -1,0 +1,1 @@
+C:\subjects\CrossPlatform\flutter-istiqomah\build\app\intermediates\cxx\Debug\105q554x\obj\arm64-v8a

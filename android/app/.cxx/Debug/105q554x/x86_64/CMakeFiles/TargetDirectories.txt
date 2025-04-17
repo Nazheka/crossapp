@@ -1,0 +1,2 @@
+C:/subjects/CrossPlatform/flutter-istiqomah/android/app/.cxx/Debug/105q554x/x86_64/CMakeFiles/edit_cache.dir
+C:/subjects/CrossPlatform/flutter-istiqomah/android/app/.cxx/Debug/105q554x/x86_64/CMakeFiles/rebuild_cache.dir
