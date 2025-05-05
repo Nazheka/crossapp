@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dailyhabit/services/chat_service.dart';
+import 'package:dailyhabit/widgets/app_scaffold.dart';
 
 class ChatPage extends StatefulWidget {
   @override
@@ -177,11 +178,8 @@ class _ChatPageState extends State<ChatPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Chat with AI'),
-        elevation: 0,
-      ),
+    return AppScaffold(
+      title: 'Chat with AI',
       body: Column(
         children: [
           Expanded(

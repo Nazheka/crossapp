@@ -3,6 +3,7 @@ import 'package:dailyhabit/models/habit.dart';
 import 'package:dailyhabit/models/notification.dart';
 import 'package:dailyhabit/pages/home/components/habit_list.dart';
 import 'package:provider/provider.dart';
+import 'package:dailyhabit/widgets/app_scaffold.dart';
 import 'modal/add.dart';
 
 class Home extends StatefulWidget {
@@ -50,40 +51,42 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Theme.of(context).primaryColor,
-      body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.only(top: 30, right: 30, left: 30),
-          child: Column(
-            children: <Widget>[
-              FadeTransition(
-                opacity: _fadeAnimation,
-                child: _header(context),
-              ),
-              SizedBox(height: 20),
-              FadeTransition(
-                opacity: _fadeAnimation,
-                child: SlideTransition(
-                  position: _slideAnimation,
-                  child: ScaleTransition(
-                    scale: _scaleAnimation,
-                    child: _buildChatSection(),
-                  ),
+    return AppScaffold(
+      title: 'DAILYHABIT',
+      body: Container(
+        color: Theme.of(context).primaryColor,
+        child: SafeArea(
+          child: Container(
+            padding: EdgeInsets.only(top: 30, right: 30, left: 30),
+            child: Column(
+              children: <Widget>[
+                FadeTransition(
+                  opacity: _fadeAnimation,
+                  child: _header(context),
                 ),
-              ),
-              SizedBox(height: 20),
-              Expanded(
-                child: FadeTransition(
+                SizedBox(height: 20),
+                FadeTransition(
                   opacity: _fadeAnimation,
                   child: SlideTransition(
                     position: _slideAnimation,
-                    child: HabitList(),
+                    child: ScaleTransition(
+                      scale: _scaleAnimation,
+                      child: _buildChatSection(),
+                    ),
                   ),
                 ),
-              ),
-            ],
+                SizedBox(height: 20),
+                Expanded(
+                  child: FadeTransition(
+                    opacity: _fadeAnimation,
+                    child: SlideTransition(
+                      position: _slideAnimation,
+                      child: HabitList(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
