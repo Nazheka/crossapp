@@ -53,52 +53,65 @@ class AppScaffold extends StatelessWidget {
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 CircleAvatar(
                   radius: 30,
                   backgroundColor: Colors.white,
                   child: Icon(
-                    Icons.person,
-                    size: 35,
+                    authProvider.isGuest ? Icons.person_outline : Icons.person,
+                    size: 30,
                     color: Theme.of(context).primaryColor,
                   ),
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'Daily Habit',
+                  authProvider.username ?? 'User',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 24,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 5),
+                SizedBox(height: 4),
                 Text(
-                  authProvider.isGuest ? 'Guest User' : authProvider.username ?? 'User',
+                  authProvider.isGuest ? 'Guest Account' : 'Registered Account',
                   style: TextStyle(
                     color: Colors.white.withOpacity(0.8),
-                    fontSize: 16,
+                    fontSize: 14,
                   ),
                 ),
               ],
             ),
           ),
-          ListTile(
-            leading: Icon(Icons.home),
-            title: Text('Home'),
-            onTap: () {
-              Navigator.pushReplacementNamed(context, Routes.home);
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.chat),
-            title: Text('Chat with AI'),
-            onTap: () {
-              Navigator.pushNamed(context, Routes.chat);
-            },
-          ),
-          Divider(),
+          if (authProvider.isGuest)
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'Please log in to access all features',
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 14,
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+            ),
+          if (!authProvider.isGuest) ...[
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text('Home'),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, Routes.home);
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.chat),
+              title: Text('Chat with AI'),
+              onTap: () {
+                Navigator.pushNamed(context, Routes.chat);
+              },
+            ),
+            Divider(),
+          ],
           if (!authProvider.isGuest)
             ListTile(
               leading: Icon(Icons.person),
@@ -107,13 +120,14 @@ class AppScaffold extends StatelessWidget {
                 Navigator.pushNamed(context, Routes.account);
               },
             ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Settings'),
-            onTap: () {
-              Navigator.pushNamed(context, Routes.settings);
-            },
-          ),
+          if (!authProvider.isGuest)
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Settings'),
+              onTap: () {
+                Navigator.pushNamed(context, Routes.settings);
+              },
+            ),
           ListTile(
             leading: Icon(Icons.info),
             title: Text('About'),

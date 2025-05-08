@@ -60,6 +60,7 @@ class _AuthPageState extends State<AuthPage> with SingleTickerProviderStateMixin
   }
 
   void _toggleAuthMode() {
+    if (_isLoading) return; // Prevent toggling while loading
     setState(() {
       _isLogin = !_isLogin;
       _errorMessage = null;
@@ -74,6 +75,9 @@ class _AuthPageState extends State<AuthPage> with SingleTickerProviderStateMixin
       _isLoading = true;
       _errorMessage = null;
     });
+
+    // Add artificial delay of 2.5 seconds
+    await Future.delayed(Duration(milliseconds: 2500));
     
     try {
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
@@ -124,10 +128,15 @@ class _AuthPageState extends State<AuthPage> with SingleTickerProviderStateMixin
   }
 
   Future<void> _loginAsGuest() async {
+    if (_isLoading) return; // Prevent guest login while loading
+    
     setState(() {
       _isLoading = true;
       _errorMessage = null;
     });
+
+    // Add artificial delay of 2.5 seconds
+    await Future.delayed(Duration(milliseconds: 2500));
     
     try {
       final authProvider = Provider.of<AuthProvider>(context, listen: false);
@@ -232,6 +241,7 @@ class _AuthPageState extends State<AuthPage> with SingleTickerProviderStateMixin
                         // Username Field
                         TextFormField(
                           controller: _usernameController,
+                          enabled: !_isLoading,
                           style: TextStyle(color: isDarkMode ? Colors.white : Colors.black87),
                           decoration: InputDecoration(
                             labelText: 'Username',
@@ -263,6 +273,7 @@ class _AuthPageState extends State<AuthPage> with SingleTickerProviderStateMixin
                         // Password Field
                         TextFormField(
                           controller: _passwordController,
+                          enabled: !_isLoading,
                           obscureText: _obscurePassword,
                           style: TextStyle(color: isDarkMode ? Colors.white : Colors.black87),
                           decoration: InputDecoration(
@@ -274,7 +285,7 @@ class _AuthPageState extends State<AuthPage> with SingleTickerProviderStateMixin
                                 _obscurePassword ? Icons.visibility : Icons.visibility_off,
                                 color: isDarkMode ? Colors.white70 : Colors.black54,
                               ),
-                              onPressed: () {
+                              onPressed: _isLoading ? null : () {
                                 setState(() {
                                   _obscurePassword = !_obscurePassword;
                                 });
